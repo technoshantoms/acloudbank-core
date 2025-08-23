@@ -31,7 +31,7 @@
 
 namespace graphene { namespace protocol {
 
-share_type tank_create_operation::calculate_fee(const fee_parameters_type& params) const {
+share_type tank_create_operation::calculate_fee(const fee_params_t& params) const {
    return params.base_fee + (fc::raw::pack_size(*this) * params.price_per_byte);
 }
 
@@ -48,7 +48,7 @@ void tank_create_operation::get_impacted_accounts(flat_set<account_id_type>& imp
    tnt::tank_validator(tnt::tank_schematic::from_create_operation(*this), 100).get_referenced_accounts(impacted);
 }
 
-share_type tank_update_operation::calculate_fee(const fee_parameters_type &params) const {
+share_type tank_update_operation::calculate_fee(const fee_params_t &params) const {
    return params.base_fee + (fc::raw::pack_size(*this) * params.price_per_byte);
 }
 
@@ -110,7 +110,7 @@ void tank_delete_operation::validate() const {
    FC_ASSERT(delete_authority.weight_threshold > 0, "Delete authority must not be trivial");
 }
 
-share_type tank_query_operation::calculate_fee(const fee_parameters_type& params) const {
+share_type tank_query_operation::calculate_fee(const fee_params_t& params) const {
    return params.base_fee + (fc::raw::pack_size(*this) * params.price_per_byte);
 }
 
@@ -165,7 +165,7 @@ void tank_query_operation::validate() const {
    validate_queries(queries, tank_to_query, false);
 }
 
-share_type tap_open_operation::calculate_fee(const fee_parameters_type& params) const {
+share_type tap_open_operation::calculate_fee(const fee_params_t& params) const {
    return params.base_fee + (fc::raw::pack_size(*this) * params.price_per_byte)
           + (tap_open_count * params.price_per_tap);
 }

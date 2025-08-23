@@ -1,26 +1,4 @@
-/*
- * Copyright (c) 2019 Contributors.
- *
- * The MIT License
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+
 
 #include <graphene/protocol/restriction_predicate.hpp>
 
@@ -131,7 +109,7 @@ using comparable_types_list = typelist::list<int64_t, string, time_point_sec, ac
                                              proposal_id_type, withdraw_permission_id_type,
                                              vesting_balance_id_type, worker_id_type, balance_id_type>;
 // Valid for list functions (in, not_in, has_all, has_none)
-struct make_flat_set { template<typename T> struct transform { using type = flat_set<T>; }; };
+template<typename T> struct make_flat_set { using type = flat_set<T>; };
 using list_types_list = typelist::transform<typelist::concat<typelist::list<bool, public_key_type, fc::sha256>,
                                                              comparable_types_list>,
                                             make_flat_set>;
@@ -486,7 +464,7 @@ object_restriction_predicate<Field> create_predicate_function(restriction_functi
       case restriction::func_ge:
          return make_predicate<predicate_ge, Field>(to_sv<comparable_types_list>::import_from(std::move(arg)));
       case restriction::func_in:
-         return make_predicate<predicate_in, Field>(to_sv<list_types_list>::import_from(std::move(arg)));
+         return make_predicate<predicate_in, Field>(to_sv<or_types_list>::import_from(std::move(arg)));
       case restriction::func_not_in:
          return make_predicate<predicate_not_in, Field>(to_sv<list_types_list>::import_from(std::move(arg)));
       case restriction::func_has_all:
