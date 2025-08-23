@@ -146,8 +146,8 @@ void database::initialize_evaluators()
 }
 
 //space_id
- const uint8_t tank_object::space_id;
- const uint8_t tank_object::type_id;
+ //const uint8_t tank_object::space_id;
+ //const uint8_t tank_object::type_id;
 
 void database::initialize_indexes()
 {
