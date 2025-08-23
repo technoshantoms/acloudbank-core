@@ -14,14 +14,14 @@ namespace graphene { namespace protocol {
    };
    using fee_parameters = transform_to_fee_parameters<operation>::type;
 
-   template<typename Operation>
+ template<typename Operation>
    class fee_helper {
      public:
-      const typename Operation::fee_params_t& cget(const fee_parameters::flat_set_type& parameters)const
+      const typename Operation::fee_parameters_type& cget(const fee_parameters::flat_set_type& parameters)const
       {
-         auto itr = parameters.find( typename Operation::fee_params_t() );
+         auto itr = parameters.find( typename Operation::fee_parameters_type() );
          FC_ASSERT( itr != parameters.end() );
-         return itr->template get<typename Operation::fee_params_t>();
+         return itr->template get<typename Operation::fee_parameters_type>();
       }
    };
 
