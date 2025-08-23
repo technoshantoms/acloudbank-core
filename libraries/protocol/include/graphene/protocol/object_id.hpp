@@ -177,7 +177,7 @@ struct reflector<graphene::db::object_id<SpaceID,TypeID> >
 {
     using type = graphene::db::object_id<SpaceID,TypeID>;
     using is_defined = std::true_type;
-    using native_members = typelist::list<fc::field_reflection<0, type, unsigned_int, &type::instance>>;
+    using native_members = typelist::list<fc::field_reflector<0, type, unsigned_int, &type::instance>>;
     using inherited_members = typelist::list<>;
     using members = native_members;
     using base_classes = typelist::list<>;

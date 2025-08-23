@@ -38,7 +38,6 @@ list(APPEND SOURCES account.cpp
                     tnt/validation.cpp
                     tnt/operations.cpp)
 
-
 list(APPEND CUSTOM_AUTHS_FILES
      custom_authorities/create_predicate_fwd_1.cpp
      custom_authorities/create_predicate_fwd_2.cpp

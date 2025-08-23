@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2019 Contributors.
- * Copyright (c) 2020-2023 Revolution Populi Limited, and contributors.
  *
  * The MIT License
  *
@@ -132,7 +131,7 @@ using comparable_types_list = typelist::list<int64_t, string, time_point_sec, ac
                                              proposal_id_type, withdraw_permission_id_type,
                                              vesting_balance_id_type, worker_id_type, balance_id_type>;
 // Valid for list functions (in, not_in, has_all, has_none)
-template<typename T> struct make_flat_set { using type = flat_set<T>; };
+struct make_flat_set { template<typename T> struct transform { using type = flat_set<T>; }; };
 using list_types_list = typelist::transform<typelist::concat<typelist::list<bool, public_key_type, fc::sha256>,
                                                              comparable_types_list>,
                                             make_flat_set>;
@@ -475,9 +474,9 @@ object_restriction_predicate<Field> create_predicate_function(restriction_functi
    try {
       switch(func) {
       case restriction::func_eq:
-         return make_predicate<predicate_eq, Field>(to_sv<equality_types_list>::import_from(std::move(arg)));
+         return make_predicate<predicate_eq, Field>(to_sv<attr_types_list>::import_from(std::move(arg)));
       case restriction::func_ne:
-         return make_predicate<predicate_ne, Field>(to_sv<equality_types_list>::import_from(std::move(arg)));
+         return make_predicate<predicate_ne, Field>(to_sv<attr_types_list>::import_from(std::move(arg)));
       case restriction::func_lt:
          return make_predicate<predicate_lt, Field>(to_sv<comparable_types_list>::import_from(std::move(arg)));
       case restriction::func_le:
