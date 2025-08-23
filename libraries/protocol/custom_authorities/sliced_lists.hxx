@@ -1,26 +1,4 @@
-/*
- * Copyright (c) 2019 Contributors.
- *
- * The MIT License
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+
 
 #include <graphene/protocol/operations.hpp>
 
@@ -30,36 +8,36 @@ namespace graphene { namespace protocol {
 namespace typelist = fc::typelist;
 
 // To make the build gentler on RAM, break the operation list into several pieces to build over several files
-using operation_list_1 = static_variant<typelist::builder<>
+using operation_list_1 = to_sv<typelist::builder<>
                                                 ::add<transfer_operation>            // 0
                                                 ::add<limit_order_create_operation>  // 1
                                                 ::add<limit_order_cancel_operation>  // 2
                                                 ::add<call_order_update_operation>   // 3
                                                 ::finalize>;
-using operation_list_2 = static_variant<typelist::builder<>
+using operation_list_2 = to_sv<typelist::builder<>
                                                 ::add<account_create_operation>      // 5
                                                 ::add<account_update_operation>      // 6
                                                 ::finalize>;
-using operation_list_3 = static_variant<typelist::builder<>
+using operation_list_3 = to_sv<typelist::builder<>
                                                 ::add<asset_create_operation>        // 10
                                                 ::finalize>;
-using operation_list_5 = static_variant<typelist::builder<>
+using operation_list_5 = to_sv<typelist::builder<>
                                                 ::add<asset_update_feed_producers_operation> // 13
                                                 ::add<asset_issue_operation>                 // 14
                                                 ::add<asset_reserve_operation>               // 15
                                                 ::finalize>;
-using operation_list_6 = static_variant<typelist::builder<>
+using operation_list_6 = to_sv<typelist::builder<>
                                                 ::add<asset_publish_feed_operation>          // 19
                                                 ::add<witness_update_operation>              // 21
                                                 ::finalize>;
-using operation_list_9 = static_variant<typelist::builder<>
+using operation_list_9 = to_sv<typelist::builder<>
                                                 ::add<vesting_balance_create_operation>      // 32
                                                 ::add<vesting_balance_withdraw_operation>    // 33
                                                 ::finalize>;
-using operation_list_10 = static_variant<typelist::builder<>
+using operation_list_10 = to_sv<typelist::builder<>
                                                 ::add<override_transfer_operation>   // 38
                                                 ::finalize>;
-using operation_list_11 = static_variant<typelist::builder<>
+using operation_list_11 = to_sv<typelist::builder<>
                                                 ::add<htlc_create_operation>         // 49
                                                 ::add<htlc_redeem_operation>         // 50
                                                 ::add<htlc_extend_operation>         // 52
@@ -74,7 +52,7 @@ using operation_list_11 = static_variant<typelist::builder<>
 //       unimplemented, so should be kept there anyway.
 //       This is to reduce the compilation time and the size of binaries.
 // TODO support more operations when we decide to continue BSIP-40 development.
-using unsupported_operations_list = static_variant<typelist::builder<>
+using unsupported_operations_list = to_sv<typelist::builder<>
                                                 ::add<fill_order_operation>            // 4  // VIRTUAL
                                                 ::add<account_whitelist_operation>     // 7  // Unsupported
                                                 ::add<account_upgrade_operation>       // 8  // Unsupported
