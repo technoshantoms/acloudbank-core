@@ -1,6 +1,4 @@
-/*
- * AcloudBank
- */
+
 #pragma once
 #include <boost/multiprecision/integer.hpp>
 #include <graphene/protocol/object_id.hpp>

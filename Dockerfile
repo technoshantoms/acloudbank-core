@@ -41,17 +41,18 @@ WORKDIR /acloudbank-core
 
 # Compile
 RUN \
-    ( git submodule sync  || \
+    ( git submodule  || \
       find `pwd`  -type f -name .git | \
-	while read f; do \
-	  rel="$(echo "${f#$PWD/}" | sed 's=[^/]*/=../=g')"; \
-	  sed -i "s=: .*/.git/=: $rel/=" "$f"; \
-	done && \
-      git submodule sync  ) && \
-    git submodule update --init  && \
-    cmake \
+    while read f; do \
+      rel="$(echo "${f#$PWD/}" | sed 's=[^/]*/=../=g')"; \
+      sed -i "s=: .*/.git/=: $rel/=" "$f"; \
+    done && \
+      git submodule  ) && \
+    git submodule  && \
+  cmake \
+    -DMANUAL_SUBMODULES=1\
         -DCMAKE_BUILD_TYPE=Release \
-	-DGRAPHENE_DISABLE_UNITY_BUILD=ON \
+    -DGRAPHENE_DISABLE_UNITY_BUILD=ON \
         . && \
     make witness_node cli_wallet get_dev_key && \
     install -s programs/witness_node/witness_node \

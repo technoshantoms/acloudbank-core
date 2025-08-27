@@ -1,6 +1,3 @@
-/*
- * Acloudbank
- */
 
 #include <graphene/chain/database.hpp>
 
@@ -57,9 +54,13 @@
 
 #include <graphene/chain/tnt/evaluators.hpp>
 
-
-
 namespace graphene { namespace chain {
+
+   
+//space_id
+// const uint8_t tank_object::space_id;
+ //const uint8_t tank_object::type_id;
+
 
 void database::initialize_evaluators()
 {
@@ -116,7 +117,6 @@ void database::initialize_evaluators()
    register_evaluator<custom_authority_create_evaluator>();
    register_evaluator<custom_authority_update_evaluator>();
    register_evaluator<custom_authority_delete_evaluator>();
-   //TNY
    register_evaluator<tank_create_evaluator>();
    register_evaluator<tank_update_evaluator>();
    register_evaluator<tank_delete_evaluator>();
@@ -144,11 +144,6 @@ void database::initialize_evaluators()
    register_evaluator<credit_deal_repay_evaluator>();
    register_evaluator<credit_deal_update_evaluator>();
 }
-
-//space_id
- //const uint8_t tank_object::space_id;
- //const uint8_t tank_object::type_id;
-
 void database::initialize_indexes()
 {
    reset_indexes();
@@ -157,7 +152,6 @@ void database::initialize_indexes()
    //Protocol object indexes
    add_index< primary_index<asset_index, 13> >(); // 8192 assets per chunk
    add_index< primary_index<force_settlement_index> >();
-
    add_index< primary_index<account_index, 20> >(); // ~1 million accounts per chunk
    add_index< primary_index<committee_member_index, 8> >(); // 256 members per chunk
    add_index< primary_index<witness_index, 10> >(); // 1024 witnesses per chunk
@@ -171,8 +165,7 @@ void database::initialize_indexes()
    add_index< primary_index<blinded_balance_index> >();
    add_index< primary_index< htlc_index> >();
    add_index< primary_index< custom_authority_index> >();
-
-   add_index< primary_index<tank_index> >();
+  add_index< primary_index<tank_index> >();
    add_index< primary_index<ticket_index> >();
    add_index< primary_index<liquidity_pool_index> >();
    add_index< primary_index<samet_fund_index> >();

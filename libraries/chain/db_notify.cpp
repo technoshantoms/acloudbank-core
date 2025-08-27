@@ -6,7 +6,6 @@
 #include <graphene/protocol/authority.hpp>
 #include <graphene/protocol/operations.hpp>
 #include <graphene/protocol/transaction.hpp>
-
 #include <graphene/protocol/tnt/validation.hpp>
 
 #include <graphene/chain/withdraw_permission_object.hpp>
@@ -22,10 +21,7 @@
 #include <graphene/chain/vesting_balance_object.hpp>
 #include <graphene/chain/transaction_history_object.hpp>
 #include <graphene/chain/custom_authority_object.hpp>
-
 #include <graphene/chain/tnt/object.hpp>
-
-
 #include <graphene/chain/ticket_object.hpp>
 #include <graphene/chain/liquidity_pool_object.hpp>
 #include <graphene/chain/samet_fund_object.hpp>
@@ -574,6 +570,7 @@ static void get_relevant_accounts( const object* obj, flat_set<account_id_type>&
               break;
         // Do not have a default fallback so that there will be a compiler warning when a new type is added
       }
+   }
    }
    else if( obj->id.space() == implementation_ids )
    {
