@@ -53,25 +53,21 @@ struct hardfork_visitor {
    fc::time_point_sec now;
 
    /// @note using head block time for all operations
-   hardfork_visitor(fc::time_point_sec now) : now(now) {}
-
-   //NOTE: uncomment to use BTS settings ------------ bellow ------
-   //explicit hardfork_visitor(const fc::time_point_sec& head_block_time) : now(head_block_time) {}
+   explicit hardfork_visitor(const fc::time_point_sec& head_block_time) : now(head_block_time) {}
 
    /// The real visitor implementations. Future operation types get added in here.
    /// @{
    template<typename Op>
    std::enable_if_t<operation::tag<Op>::value < protocol::operation::tag<first_unforked_op>::value, bool>
-   visit() const { return true; }
+   visit() { return true; }
    template<typename Op>
    std::enable_if_t<fc::typelist::contains<BSIP_40_ops, Op>(), bool>
-   visit() const { return HARDFORK_BSIP_40_PASSED(now); }
+   visit() { return HARDFORK_BSIP_40_PASSED(now); }
    template<typename Op>
    std::enable_if_t<fc::typelist::contains<hf1604_ops, Op>(), bool>
    visit() { return HARDFORK_CORE_1604_PASSED(now); }
-   template<typename Op>
    std::enable_if_t<fc::typelist::contains<TNT_ops, Op>(), bool>
-   visit() const { return HARDFORK_BSIP_72_PASSED(now); }
+   visit()  { return HARDFORK_BSIP_72_PASSED(now); }
    template<typename Op>
    std::enable_if_t<fc::typelist::contains<hf2103_ops, Op>(), bool>
    visit() { return HARDFORK_CORE_2103_PASSED(now); }
@@ -95,11 +91,11 @@ struct hardfork_visitor {
    /// typelist::runtime::dispatch adaptor
    template<class W, class Op=typename W::type>
    std::enable_if_t<fc::typelist::contains<protocol::operation::list, Op>(), bool>
-   operator()(W) const { return visit<Op>(); }
+   operator()(W) { return visit<Op>(); }
    /// static_variant::visit adaptor
    template<class Op>
    std::enable_if_t<fc::typelist::contains<protocol::operation::list, Op>(), bool>
-   operator()(const Op&) const { return visit<Op>(); }
+   operator()(const Op&) { return visit<Op>(); }
    /// Tag adaptor
    bool visit(protocol::operation::tag_type tag) const {
       return fc::typelist::runtime::dispatch(protocol::operation::list(), (size_t)tag, *this);
