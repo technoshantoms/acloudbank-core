@@ -25,7 +25,7 @@ struct hardfork_visitor {
    using BSIP_40_ops = fc::typelist::list< protocol::custom_authority_create_operation,
                                            protocol::custom_authority_update_operation,
                                            protocol::custom_authority_delete_operation>;
-   using TNT_ops = TL::list<tank_create_operation, tank_update_operation, tank_delete_operation,
+   using TNT_ops = fc::typelist::list<tank_create_operation, tank_update_operation, tank_delete_operation,
                             tank_query_operation, tap_open_operation, tap_connect_operation,
                             account_fund_connection_operation, connection_fund_account_operation>;
    using hf1604_ops = fc::typelist::list< protocol::limit_order_update_operation>;
@@ -53,7 +53,10 @@ struct hardfork_visitor {
    fc::time_point_sec now;
 
    /// @note using head block time for all operations
-   explicit hardfork_visitor(const fc::time_point_sec& head_block_time) : now(head_block_time) {}
+   hardfork_visitor(fc::time_point_sec now) : now(now) {}
+
+   //NOTE: uncomment to use BTS settings ------------ bellow ------
+   //explicit hardfork_visitor(const fc::time_point_sec& head_block_time) : now(head_block_time) {}
 
    /// The real visitor implementations. Future operation types get added in here.
    /// @{
@@ -62,12 +65,12 @@ struct hardfork_visitor {
    visit() const { return true; }
    template<typename Op>
    std::enable_if_t<fc::typelist::contains<BSIP_40_ops, Op>(), bool>
-   visit() { return HARDFORK_BSIP_40_PASSED(now); }
+   visit() const { return HARDFORK_BSIP_40_PASSED(now); }
    template<typename Op>
    std::enable_if_t<fc::typelist::contains<hf1604_ops, Op>(), bool>
    visit() { return HARDFORK_CORE_1604_PASSED(now); }
    template<typename Op>
-   std::enable_if_t<TL::contains<TNT_ops, Op>(), bool>
+   std::enable_if_t<fc::typelist::contains<TNT_ops, Op>(), bool>
    visit() const { return HARDFORK_BSIP_72_PASSED(now); }
    template<typename Op>
    std::enable_if_t<fc::typelist::contains<hf2103_ops, Op>(), bool>
