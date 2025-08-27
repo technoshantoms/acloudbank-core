@@ -247,7 +247,7 @@ struct proposal_operation_hardfork_visitor
    using TNT_Ops = fc::typelist::list<tank_create_operation, tank_update_operation, tank_delete_operation,
                                       tank_query_operation, tap_open_operation, tap_connect_operation,
                                       account_fund_connection_operation, connection_fund_account_operation>;
-   template<typename Op, std::enable_if_t<fc::typelist::contains<TNT_Ops>(), bool> = true>
+   template<typename Op, std::enable_if_t<fc::typelist::contains<TNT_Ops, Op>(), bool> = true>
    void operator()(const Op&) const {
       FC_ASSERT(HARDFORK_BSIP_72_PASSED(block_time), "Not allowed before hardfork BSIP 72");
    }
