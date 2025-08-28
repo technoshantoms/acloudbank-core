@@ -43,7 +43,7 @@ struct hardfork_visitor {
    std::enable_if_t<TL::contains<BSIP_40_ops, Op>(), bool>
    visit() { return HARDFORK_BSIP_40_PASSED(now); }
 
-   template<typename Op, std::enable_if_t<fc::typelist::contains<TNT_Ops, Op>(), bool> = true>
+   template<typename Op, std::enable_if_t<TL::contains<TNT_Ops, Op>(), bool> = true>
    void operator()(const Op&) const {
       FC_ASSERT(HARDFORK_BSIP_72_PASSED(blocknow_time), "Not allowed before hardfork BSIP 72");
    }
